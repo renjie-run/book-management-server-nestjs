@@ -1,4 +1,4 @@
-import { mkdirSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 import { diskStorage } from 'multer';
 
 const ROOT_DIR = 'uploads';
@@ -16,8 +16,12 @@ const storage = diskStorage({
   destination: async function (req, file, cb) {
     const dir = getUploadDir();
     try {
-      await mkdirSync(ROOT_DIR);
-      await mkdirSync(dir);
+      if (!existsSync(ROOT_DIR)) {
+        await mkdirSync(ROOT_DIR);
+      }
+      if (!existsSync(dir)) {
+        await mkdirSync(dir);
+      }
     } catch (e) {}
 
     cb(null, dir);
