@@ -47,6 +47,7 @@ export class BookService {
     const books: Book[] = await this.dbService.read();
     const newBook = new Book();
     newBook.id = this.generateBookID(books);
+    newBook.name = createBookDto.name;
     newBook.author = createBookDto.author;
     newBook.description = createBookDto.description;
     newBook.cover = createBookDto.cover;
